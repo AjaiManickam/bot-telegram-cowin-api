@@ -2,11 +2,11 @@ from telegram.ext import *
 import methods as get
 import Constants as keys
 import responses as R
+import key
 
 print ('Initializing Bot')
 
 #Command and Message handlers
-
 def start_command(update, context):
           print(f'{update.effective_user["username"]}: {update.message.text}')
           print(f'Bot: {keys.STR_REPLY_TO_START_COMMAND}')
@@ -20,10 +20,11 @@ def help_command(update, context):
 def vaccine_cbe_command(update, context):
           print(f'{update.effective_user["username"]}: {update.message.text}')
           vaccine_info = get.vaccine_info_as_text(539)
-          if len(vaccine_info) > 4096:
+          max_char = keys.MAX_CHARS_ALLOWED_IN_TELEGRAM_MSG
+          if len(vaccine_info) > max_char:
                     print('Splitting the data and sending in smaller chunks since its too large...')
                     final_note = ''
-                    max_typable_char = 4096 - len(final_note)
+                    max_typable_char = max_char - len(final_note)
                     for x in range(0, len(vaccine_info), max_typable_char):
                               chunk_text = vaccine_info[x:x+max_typable_char]+final_note
                               print(f'Bot: {chunk_text}')
@@ -59,7 +60,7 @@ def error(update, context):
           print(f'Update {update} caused error {context.error} - by {update.effective_user}')
 
 def main():
-          updater = Updater(keys.API_KEY, use_context=True)
+          updater = Updater(key.API_KEY, use_context=True)
           dp = updater.dispatcher
           #generic commands
           dp.add_handler(CommandHandler("start",start_command))

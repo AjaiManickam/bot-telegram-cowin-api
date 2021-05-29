@@ -2,10 +2,8 @@ import requests
 import Constants as keys
 from datetime import datetime
 
-#Methods
-                          
+#Methods                      
 def vaccine_availability_by_district(district_id):
-
           print(f'Getting data for the district ID - {district_id}...')
           date = datetime.today().strftime('%d-%m-%Y')
           url = f'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id={district_id}&date={date}'
@@ -23,7 +21,6 @@ def get_sessions_only_with_vaccine_available(response):
           return list_sessions
           
 def vaccine_info_as_text(district_id):
-
           list_available_sessions = vaccine_availability_by_district(district_id)
           final_text = ''
           if len(list_available_sessions)==0:
