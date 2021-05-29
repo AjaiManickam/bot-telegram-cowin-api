@@ -52,7 +52,7 @@ def vaccine_poy_command(update, context):
 def handle_message(update, context):
           print(f'{update.effective_user["username"]}: {update.message.text}')
           text = str(update.message.text).lower()
-          response = R.sample_responses(text,update)
+          response = R.response_msg(text,update)
           print(f'Bot: {response}')
           update.message.reply_text(response)
 
