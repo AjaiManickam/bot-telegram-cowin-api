@@ -1,4 +1,3 @@
-from telegram import bot
 from telegram.ext import *
 import methods as get
 import Constants as keys
