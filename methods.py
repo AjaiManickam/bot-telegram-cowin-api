@@ -16,7 +16,6 @@ def vaccine_availability_by_district(district_id):
 
 def get_sessions_only_with_vaccine_available(response):
           list_sessions = response.json()["sessions"]
-          #commenting the below code to fetch all the sessions for the time being, need to uncomment once determined
           for i in range(len(list_sessions)-1,-1,-1):
                     if list_sessions[i]["available_capacity"] <= 0: list_sessions.pop(i)
           return list_sessions
