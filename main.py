@@ -2,7 +2,7 @@ from telegram.ext import *
 import methods as get
 import Constants as keys
 import responses as R
-import KEY
+from os import environ
 
 print ('Initializing Bot')
 
@@ -60,7 +60,8 @@ def error(update, context):
           print(f'Update {update} caused error {context.error}')
 
 def main():
-          updater = Updater(KEY.API_KEY, use_context=True)
+          api_key = environ['API_KEY']
+          updater = Updater(api_key, use_context=True)
           dp = updater.dispatcher
           #generic commands
           dp.add_handler(CommandHandler("start",start_command))
