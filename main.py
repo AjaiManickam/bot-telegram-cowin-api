@@ -3,7 +3,7 @@ from telegram.ext import *
 import methods as get
 import Constants as keys
 import responses as R
-import key
+import KEY
 
 print ('Initializing Bot')
 
@@ -61,7 +61,7 @@ def error(update, context):
           print(f'Update {update} caused error {context.error}')
 
 def main():
-          updater = Updater(key.API_KEY, use_context=True)
+          updater = Updater(KEY.API_KEY, use_context=True)
           dp = updater.dispatcher
           #generic commands
           dp.add_handler(CommandHandler("start",start_command))
