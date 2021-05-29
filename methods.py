@@ -7,7 +7,7 @@ def vaccine_availability_by_district(district_id):
           print(f'Getting data for the district ID - {district_id}...')
           date = datetime.today().strftime('%d-%m-%Y')
           url = f'https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id={district_id}&date={date}'
-          browser_header = {'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.76 Safari/537.36'}
+          browser_header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36'}
           print(url)
           response = requests.get(url, headers=browser_header)
           print(response)
