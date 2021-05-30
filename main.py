@@ -68,8 +68,8 @@ def main():
           dp.add_handler(CommandHandler("help",help_command))
 
           #custom commands
-          dp.add_handler(CommandHandler("vaccine_cbe",vaccine_cbe_command))
-          dp.add_handler(CommandHandler("vaccine_poy",vaccine_poy_command))
+          dp.add_handler(CommandHandler("cbe",vaccine_cbe_command))
+          dp.add_handler(CommandHandler("poy",vaccine_poy_command))
 
           #Message and Error Handling
           dp.add_handler(MessageHandler(Filters.text,handle_message))
