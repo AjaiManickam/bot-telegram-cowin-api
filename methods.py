@@ -15,7 +15,6 @@ def vaccine_availability_by_district(district_id):
                     return get_sessions_only_with_vaccine_available(response)
           return []
           
-
 def get_sessions_only_with_vaccine_available(success_response):
           list_sessions = success_response.json()["sessions"]
           for i in range(len(list_sessions)-1,-1,-1):
@@ -39,4 +38,4 @@ def info_formatted(session):
           return f"\nName: {full_address}\nTotal Available Capacity: {session['available_capacity']}\nDose 1 capacity: {session['available_capacity_dose1']}\nDose 2 capacity: {session['available_capacity_dose2']}\nAge Group: {session['min_age_limit']}+\nFee: {fee}\nVaccine: {session['vaccine']}\n\nRegister: https://selfregistration.cowin.gov.in/\n-------------------------------------------------------------"
 
 def print_input_info(update):
-          print(f'{str(datetime.now())} {update.effective_user["username"]} (from {update.effective_chat["title"]} | {update.effective_chat["id"]}) :: {update.message.text}')
+          print(f'{str(datetime.now())} {update.effective_user["username"]} (from {update.effective_chat["title"]} | {update.effective_chat["id"]}) :: {update.message.text}')        
