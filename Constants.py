@@ -1,5 +1,5 @@
 MAX_CHARS_ALLOWED_IN_TELEGRAM_MSG = 4096
-STR_SLOTS_NOT_AVAILABLE = 'OOPS, all slots booked for today.'
+STR_SLOTS_NOT_AVAILABLE = 'OOPS, all slots booked for today. Try again tomorrow...'
 STR_REPLY_TO_GREETINGS = 'hope you are safe and sound!\nTo get started, click /start and follow along.'
 STR_REPLY_TO_UNRECOGNIZED_TEXT = "I don't understand what you are talking. If you are stuck, you might want to click on /help"
 STR_REPLY_TO_START_COMMAND = 'welcome to this bot. I can help you find vaccination centres and the availability of the slots. To know more, click /help' 
