@@ -10,7 +10,7 @@ def vaccine_availability_by_district(district_id):
           browser_header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36'}
           print(url)
           response = requests.get(url, headers=browser_header)
-          print(f'<Response [{response.status_code}] - {response.reason}>')
+          print(f'{response} - {response.reason}')
           if response.status_code == 200:
                     return get_sessions_only_with_vaccine_available(response)
           return []
