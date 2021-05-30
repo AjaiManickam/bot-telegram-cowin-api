@@ -10,12 +10,14 @@ def vaccine_availability_by_district(district_id):
           browser_header = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.77 Safari/537.36'}
           print(url)
           response = requests.get(url, headers=browser_header)
-          print(response)
-          list_available_sessions = get_sessions_only_with_vaccine_available(response)
-          return list_available_sessions
+          print(f'<Response [{response.status_code}] - {response.reason}>')
+          if response.status_code == 200:
+                    return get_sessions_only_with_vaccine_available(response)
+          return []
+          
 
-def get_sessions_only_with_vaccine_available(response):
-          list_sessions = response.json()["sessions"]
+def get_sessions_only_with_vaccine_available(success_response):
+          list_sessions = success_response.json()["sessions"]
           for i in range(len(list_sessions)-1,-1,-1):
                     if list_sessions[i]["available_capacity"] <= 0: list_sessions.pop(i)
           return list_sessions
