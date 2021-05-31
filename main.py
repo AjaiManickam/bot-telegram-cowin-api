@@ -6,7 +6,6 @@ from telegram.ext.messagehandler import MessageHandler
 from telegram.ext.updater import Updater
 
 import CONSTANTS
-import KEY
 import methods as get
 import responses
 
