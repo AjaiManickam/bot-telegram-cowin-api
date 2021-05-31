@@ -1,26 +1,32 @@
-from telegram.ext import *
-import methods as get
-import Constants as keys
-import responses as R
 from os import environ
+
+from telegram.ext.commandhandler import CommandHandler
+from telegram.ext.filters import Filters
+from telegram.ext.messagehandler import MessageHandler
+from telegram.ext.updater import Updater
+
+import CONSTANTS
+import KEY
+import methods as get
+import responses
 
 print ('Initializing Bot')
 
 #Command and Message handlers
 def start_command(update, context):
           get.print_input_info(update)
-          print(f'Bot: {keys.STR_REPLY_TO_START_COMMAND}')
-          update.message.reply_text(f'Hey {update.effective_user.first_name}, {keys.STR_REPLY_TO_START_COMMAND}')
+          print(f'Bot: {CONSTANTS.STR_REPLY_TO_START_COMMAND}')
+          update.message.reply_text(f'Hey {update.effective_user.first_name}, {CONSTANTS.STR_REPLY_TO_START_COMMAND}')
 
 def help_command(update, context):
           get.print_input_info(update)
           print('Bot: {Sending back help text}')
-          update.message.reply_text(f'{update.effective_user.first_name}, {keys.STR_REPLY_TO_HELP_COMMAND}')
+          update.message.reply_text(f'{update.effective_user.first_name}, {CONSTANTS.STR_REPLY_TO_HELP_COMMAND}')
 
 def vaccine_cbe_command(update, context):
           get.print_input_info(update)
           vaccine_info = get.vaccine_info_as_text(539)
-          max_char = keys.MAX_CHARS_ALLOWED_IN_TELEGRAM_MSG
+          max_char = CONSTANTS.MAX_CHARS_ALLOWED_IN_TELEGRAM_MSG
           if len(vaccine_info) > max_char:
                     print('Splitting the data and sending in smaller chunks since its too large...')
                     final_note = ''
@@ -44,7 +50,7 @@ def vaccine_poy_command(update, context):
                               is_slots_available_for_POY = True
                               final_text = final_text + get.info_formatted(session)
           if not is_slots_available_for_POY:
-                    final_text = keys.STR_SLOTS_NOT_AVAILABLE
+                    final_text = CONSTANTS.STR_SLOTS_NOT_AVAILABLE
           print(f'Bot: {final_text}')
           update.message.reply_text(final_text)
           print(f'Data sent back successfully to {update.effective_user.username}')
@@ -52,7 +58,7 @@ def vaccine_poy_command(update, context):
 def handle_message(update, context):
           get.print_input_info(update)
           text = str(update.message.text).lower()
-          response = R.response_msg(text,update)
+          response = responses.respond_with(text,update)
           print(f'Bot: {response}')
           update.message.reply_text(response)
 
