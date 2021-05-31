@@ -38,4 +38,4 @@ def info_formatted(session):
           return f"\nName: {full_address}\nTotal Available Capacity: {session['available_capacity']}\nDose 1 capacity: {session['available_capacity_dose1']}\nDose 2 capacity: {session['available_capacity_dose2']}\nAge Group: {session['min_age_limit']}+\nFee: {fee}\nVaccine: {session['vaccine']}\n\nRegister: https://selfregistration.cowin.gov.in/\n-------------------------------------------------------------"
 
 def print_input_info(update):
-          print(f'{str(datetime.now())} {update.effective_user["username"]} (from {update.effective_chat["title"]} | {update.effective_chat["id"]}) :: {update.message.text}')        
+          print(f'-------------------{str(datetime.now())} {update.effective_user["first_name"]} {update.effective_user["last_name"]} ({update.effective_user["username"]} from {update.effective_chat["title"]} | {update.effective_chat["id"]})-------------------\n{update.effective_user["first_name"]}: {update.message.text}')        
