@@ -1,3 +1,4 @@
+from datetime import datetime
 from os import environ
 
 from telegram.ext.commandhandler import CommandHandler
@@ -25,34 +26,34 @@ def help_command(update, context):
 
 def vaccine_cbe_command(update, context):
           get.print_input_info(update)
-          vaccine_info = get.vaccine_info_as_text(539)
-          max_char = CONSTANTS.MAX_CHARS_ALLOWED_IN_TELEGRAM_MSG
-          if len(vaccine_info) > max_char:
-                    print('Splitting the data and sending in smaller chunks since its too large...')
-                    final_note = ''
-                    max_typable_char = max_char - len(final_note)
-                    for x in range(0, len(vaccine_info), max_typable_char):
-                              chunk_text = vaccine_info[x:x+max_typable_char]+final_note
-                              print(f'Bot: {chunk_text}')
-                              update.message.reply_text(chunk_text)
-          else:
-                    print(f'Bot: {vaccine_info}')
-                    update.message.reply_text(vaccine_info)
+          date = datetime.today().strftime('%d-%m-%Y')
+          vaccine_info = get.vaccine_info_as_text(get.get_available_sessions_by_district_on_date(CONSTANTS.DIST_ID_CBE,date))
+          result_text = get.get_text_as_list(vaccine_info)
+          for text in result_text:
+                    print(f'Bot: {text}')
+                    update.message.reply_text(text)
           print(f'Data sent back successfully to {update.effective_user.username}')
 
 def vaccine_poy_command(update, context):
           get.print_input_info(update)
-          list_available_sessions = get.vaccine_availability_by_district(539)
-          is_slots_available_for_POY = False
-          final_text = ''
-          for session in list_available_sessions:
-                    if str(session['pincode'])[0:3] == "642" or str(session['pincode'])== '641202':
-                              is_slots_available_for_POY = True
-                              final_text = final_text + get.info_formatted(session)
-          if not is_slots_available_for_POY:
-                    final_text = CONSTANTS.STR_SLOTS_NOT_AVAILABLE
-          print(f'Bot: {final_text}')
-          update.message.reply_text(final_text)
+          date = datetime.today().strftime('%d-%m-%Y')
+          list_available_sessions = get.get_available_sessions_by_district_on_date(CONSTANTS.DIST_ID_CBE,date)
+          poy_available_sessions = get.available_sessions_in_poy_list(list_available_sessions)
+          result_text = get.get_text_as_list(get.vaccine_info_as_text(poy_available_sessions))
+          for text in result_text:
+                    print(f'Bot: {text}')
+                    update.message.reply_text(text)
+          print(f'Data sent back successfully to {update.effective_user.username}')
+
+def seven_day_appt_cbe_command(update,context):
+          get.print_input_info(update)
+          date = datetime.today().strftime('%d-%m-%Y')
+          list_available_sessions = get.get_seven_day_available_sessions_by_district(CONSTANTS.DIST_ID_CBE,date)
+          text = get.vaccine_info_as_text(list_available_sessions,'district_calendar')
+          result_text = get.get_text_as_list(text)
+          for text in result_text:
+                    print(f'Bot: {text}')
+                    update.message.reply_text(text)
           print(f'Data sent back successfully to {update.effective_user.username}')
 
 def handle_message(update, context):
@@ -69,6 +70,7 @@ def main():
           api_key = environ['API_KEY']
           updater = Updater(api_key, use_context=True)
           dp = updater.dispatcher
+          
           #generic commands
           dp.add_handler(CommandHandler("start",start_command))
           dp.add_handler(CommandHandler("help",help_command))
@@ -76,6 +78,7 @@ def main():
           #custom commands
           dp.add_handler(CommandHandler("cbe",vaccine_cbe_command))
           dp.add_handler(CommandHandler("poy",vaccine_poy_command))
+          dp.add_handler(CommandHandler("7dcbe",seven_day_appt_cbe_command))
 
           #Message and Error Handling
           dp.add_handler(MessageHandler(Filters.text,handle_message))
